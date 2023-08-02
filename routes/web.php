@@ -15,9 +15,7 @@ use App\Http\Controllers\ApprovalController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-route::get('/list',[ApprovalController::class,'home']);
+
+route::get('/',[ApprovalController::class,'home']);
 route::get('/post',[ApprovalController::class,'post']);
 Route::post('/post', [ApprovalController::class,'store']);
