@@ -7,8 +7,8 @@
         @foreach ($posts as $post)
             <div class='post'>
                 <h2 class='title'>{{ $post->title }}</h2>
-                <p class='user'>{{ $post->user->name }}</p>
-                //ユーザー名を表示させたい。
+                {{--<p class='user'>{{ $post->user->name }}</p>--}}
+                <!--ユーザー名を表示させたい。-->
             </div>
         @endforeach
         <div class="pagination">
