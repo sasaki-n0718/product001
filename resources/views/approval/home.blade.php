@@ -2,7 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     
 <body>
-    <h1>home page</h1>
+    <h1><a href=/>home page</a></h1>
+    <!--検索機能-->
+    <div class='search'>
+        <form action="/" method="get">
+            <input type="text" name="keyword" placeholder="検索キーワードを入力してください">
+            <input type="submit" value="検索">
+        </form>
+    </div>
+    <!--決裁一覧・新規作成-->
     <div class='list'>
         @foreach ($posts as $post)
             <div class='post'>
