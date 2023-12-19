@@ -4,7 +4,7 @@
 <body>
     <h1>post page</h1>
     <div class='form'>
-        <form action="/post" method="POST">
+        <form action="{{route('post')}}" method="POST">
             @csrf
             <div class='title'>
                 <h2>タイトル</h2>
@@ -29,7 +29,7 @@
                 -->
             </div>
             <div class='cancel'>
-                <a href="/">キャンセル</a>
+                <a href="{{route('index')}}">キャンセル</a>
             </div>
             <div class='submit'>
                 <input type="submit" value="作成">
