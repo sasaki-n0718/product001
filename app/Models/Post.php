@@ -10,10 +10,10 @@ class Post extends Model
 {
     use HasFactory;
     
-    public function getPaginate(int $limit_count=5)
-    {
-        return $this->orderBy('updated_at','DESC')->paginate($limit_count);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
+    
     public function searchIndex($request,int $limit_count=5)
     {
         $keyword=$request->input('keyword');
