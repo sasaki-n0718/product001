@@ -23,8 +23,10 @@
     <div class='list'>
         @foreach ($posts as $post)
             <div class='post'>
-                <h2 class='title'>{{ $post->title }}</h2>
-                <p class='postuser'>{{ $post->user->name }}</p>
+                <h2 class='title'>
+                    <a href="{{route('show',['id'=>$post->id])}}">{{$post->title}}</a>
+                </h2>
+                <h3 class='postuser'>{{$post->user->name}}</h3>
             </div>
         @endforeach
         <div class="pagination">
@@ -34,6 +36,14 @@
             <a href="{{route('post')}}">新規決裁の作成</a>
         </div>
     </div>
+    <!--決裁詳細-->
+    @if(isset($postbody))
+    <div class="approval_body">
+        <h2 class="title">{{$postbody->title}}</h2>
+        <h3 class="postuser">{{$postbody->user->name}}</h3>
+        <p class="body">{{$postbody->body}}</p>
+    </div>
+    @endif
 </body>
 
 
