@@ -14,15 +14,22 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function searchIndex($request,int $limit_count=5)
-    {
-        $keyword=$request->input('keyword');
+    public function searchIndex($keyword,int $limit_count=5){
         $query=Post::query();
         if(!empty($keyword)){
             $query->where('title','LIKE',"%{$keyword}%")->get();
         }
         return $posts=$query->orderBy('updated_at','DESC')->paginate($limit_count);
     }
+    
+    public function postbody($id){
+        $postbody=null;
+        if(!empty($id)){
+            $postbody=Post::find($id);
+        }
+        return $postbody;
+    }
+    
     protected $fillable =[
         'title',
         'body',

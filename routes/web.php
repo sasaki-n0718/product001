@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     //追記したアプリページ
     route::get('/',[ApprovalController::class,'index'])->name('index');
     route::get('/post',[ApprovalController::class,'post'])->name('post');
+    route::get('/{id}',[ApprovalController::class,'index'])->name('show');
     route::post('/post',[ApprovalController::class,'store']);
 });
 
