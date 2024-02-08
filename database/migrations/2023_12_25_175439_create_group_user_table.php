@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('group')->nullable(true)->change();
+        Schema::create('group_user', function (Blueprint $table) {
+            $table->id();
+            $table->integer('group_id');
+            $table->integer('user_id');
         });
     }
 
@@ -25,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->string('group')->nullable(false)->change();
-        });
+        Schema::dropIfExists('group_user');
     }
 };

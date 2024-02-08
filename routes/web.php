@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +21,18 @@ use App\Http\Controllers\ApprovalController;
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');*/
 
-Route::middleware('auth')->group(function () {
+route::middleware('auth')->group(function () {
     //デフォルトで入ってるプロフページ
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     //追記したアプリページ
     route::get('/',[ApprovalController::class,'index'])->name('index');
     route::get('/post',[ApprovalController::class,'post'])->name('post');
-    route::get('/{id}',[ApprovalController::class,'index'])->name('show');
+    route::get('/{id}',[ApprovalController::class,'index'])->whereNumber('id')->name('show');
     route::post('/post',[ApprovalController::class,'store']);
 });
+route::get('/group',[GroupController::class,'create'])->name('group');
+route::post('/group',[GroupController::class,'store']);
 
 require __DIR__.'/auth.php';
