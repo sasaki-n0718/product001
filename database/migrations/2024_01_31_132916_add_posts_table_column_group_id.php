@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        schema::table('users',function(blueprint $table){
-            $table->string('password',255)->change();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->foreignId('group_id')->constrained();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         schema::table('users',function(blueprint $table){
-            $table->string('password',50)->change();
+            $table->dropColumn('group_id');
         });
     }
 };

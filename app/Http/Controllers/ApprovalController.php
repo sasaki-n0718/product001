@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
@@ -20,19 +21,14 @@ class ApprovalController extends Controller
     }
     
     public function post(){
-        return view('approval.post');
-    }
-    
-    /*public function show(Post $post,Request $request,$id){
-        $user=Auth::user();
-        return view('approval.index')->with([
-            'postbody'=>$post->postbody($request),
-            'user'=>$user
+        return view('approval.post')->with([
+            'groups'=>Auth::user()->groups()->get(),
             ]);
-    }*/
-    
+    }
+
     public function store(Request $request,Post $post){
         $input=$request['post'];
+        $input['user_id']=Auth::user()->id;
         $post->fill($input)->save();
         return redirect()->route('index');
     }

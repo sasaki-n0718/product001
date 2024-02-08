@@ -18,15 +18,11 @@
                 <!--あとで考える。-->
             </div>
             <div class='group'>
-                <!--あとで考える。
-                <select name="group">
-                    {{--@foreach ()
-                    <option>{{group}}</option>
+                <select name="post[group_id]">
+                    @foreach ($groups as $group)
+                    <option value="{{$group->id}}">{{$group->name}}</option>
                     @endforeach
-                    <option selected="selected">{{group}}</option>
-                    ログインしてる人のグループ属性を参照したい。
-                </select>--}}
-                -->
+                </select>
             </div>
             <div class='cancel'>
                 <a href="{{route('index')}}">キャンセル</a>

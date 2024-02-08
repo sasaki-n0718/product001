@@ -13,6 +13,9 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
     
     public function searchIndex($keyword,int $limit_count=5){
         $query=Post::query();
@@ -33,5 +36,7 @@ class Post extends Model
     protected $fillable =[
         'title',
         'body',
+        'group_id',
+        'user_id',
         ];
 }
