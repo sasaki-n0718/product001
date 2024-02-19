@@ -20,10 +20,18 @@ class Post extends Model
         return $this->belongsTo(Group::class);
     }
     
-    public function searchIndex($keyword,int $limit_count=5){
-        $query=Post::query();
+    public function searchIndex($keyword,$user,int $limit_count=5){
+        $query=Post::query()->whereHas('accepts',function($q)use($user){
+            $q->where('post_user.user_id',$user->id);
+        });
+        /*dd($query);*/
         if(!empty($keyword)){
             $query->where('title','LIKE',"%{$keyword}%")->get();
+        }
+        else{
+            $query->whereHas('accepts',function($q)use($user){
+                $q->where('post_user.user_id',$user->id)->where('post_user.accept',false);
+            })->get();
         }
         return $posts=$query->orderBy('updated_at','DESC')->paginate($limit_count);
     }

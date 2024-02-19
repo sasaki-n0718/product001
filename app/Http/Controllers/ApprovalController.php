@@ -15,9 +15,9 @@ class ApprovalController extends Controller
         $keyword=$request->input('keyword');
         $id=$request->id;
         return view('approval.index')->with([
-            'posts'=>$post->searchIndex($keyword),
+            'posts'=>$post->searchIndex($keyword,$user),
             'postbody'=>$post->postbody($id),
-            'user'=>$user
+            'user'=>$user,
         ]);
     }
     
