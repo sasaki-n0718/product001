@@ -13,6 +13,9 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function accepts(){
+        return $this->belongsToMany(User::class)->withPivot('accept');
+    }
     public function group(){
         return $this->belongsTo(Group::class);
     }

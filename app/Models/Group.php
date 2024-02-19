@@ -15,6 +15,10 @@ class Group extends Model
     public function posts(){
         return $this->hasMany(Post::class);
     }
+    
+    public function group_member($group_id){
+        return $members=Group::find($group_id)->users()->get();
+    }
 
     protected $fillable=[
         'name',

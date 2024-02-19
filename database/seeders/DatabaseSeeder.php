@@ -39,5 +39,9 @@ class DatabaseSeeder extends Seeder
             'name'=>'admin',
             'email'=>'dddobrat@gmail.com',
             ]);
+        User::factory()->hasAttached($group)->create([
+            'name'=>'test',
+            'email'=>'test@example.com',
+            ]);
     }
 }

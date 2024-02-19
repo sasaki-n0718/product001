@@ -15,6 +15,9 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class);
     }
+    public function accepts(){
+        return $this->belongsToMany(Post::class);
+    }
     public function groups(){
         return $this->belongsToMany(Group::class);
     }
