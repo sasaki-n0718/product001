@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
@@ -26,10 +27,22 @@ class ApprovalController extends Controller
             ]);
     }
 
-    public function store(Request $request,Post $post){
+    public function store(Request $request,Post $post,Group $group){
         $input=$request['post'];
         $input['user_id']=Auth::user()->id;
+        $group_id=$request['post']['group_id'];
         $post->fill($input)->save();
-        return redirect()->route('index');
+        $members=$group->group_member($group_id);
+        foreach($members as $member_id){
+            $post->accepts()->attach($member_id);
+        }
+        return redirect()->route('show',['id'=>$post->id]);
+    }
+    
+    public function accept(Request $request){
+        $user=User::find(Auth::user()->id);
+        $post_id=$request->id;
+        $user->accepts()->updateExistingPivot($post_id, ['accept' => true,]);
+        return redirect()->route('show',['id'=>$post_id]);
     }
 }

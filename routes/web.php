@@ -30,6 +30,7 @@ route::middleware('auth')->group(function () {
     route::get('/',[ApprovalController::class,'index'])->name('index');
     route::get('/post',[ApprovalController::class,'post'])->name('post');
     route::get('/{id}',[ApprovalController::class,'index'])->whereNumber('id')->name('show');
+    route::post('{id}/accept',[ApprovalController::class,'accept'])->whereNumber('id')->name('accept');
     route::post('/post',[ApprovalController::class,'store']);
 });
 route::get('/group',[GroupController::class,'create'])->name('group');

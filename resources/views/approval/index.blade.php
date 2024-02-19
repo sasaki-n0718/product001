@@ -40,6 +40,15 @@
     </div>
     <!--決裁詳細-->
     @if(isset($postbody))
+    <div class='accept_count'>
+        <p>承認状況{{$postbody->accepts()->wherePivot('accept',true)->count()}}/{{$postbody->accepts->count()}}</p>
+    </div>
+    <div cllass='accept_button'>
+        <form action="{{route('accept',['id'=>$postbody->id])}}" method="post">
+            @csrf
+            <button>承認</button>
+        </form>
+    </div>
     <div class='approval_body'>
         <h2 class='title'>{{$postbody->title}}</h2>
         <h3 class='post_user'>{{$postbody->user->name}}({{$postbody->group->name}})</h3>
