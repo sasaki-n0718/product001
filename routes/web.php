@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ route::middleware('auth')->group(function () {
     route::get('/group',[GroupController::class,'create'])->name('group');
     route::post('/group',[GroupController::class,'store']);
     route::get('/download/{id}',[FileController::class,'download'])->name('download');
+    route::post('/comment',[CommentController::class,'store'])->name('comment');
 });
 
 require __DIR__.'/auth.php';
