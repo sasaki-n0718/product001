@@ -4,7 +4,7 @@
 <body>
     <h1>post page</h1>
     <div class='form'>
-        <form action="{{route('post')}}" method="POST">
+        <form action="{{route('post')}}" method="POST" enctype='multipart/form-data'>
             @csrf
             <div class='title'>
                 <h2>タイトル</h2>
@@ -15,7 +15,8 @@
                 <input type="textarea" name="post[body]">
             </div>
             <div class='file'>
-                <!--あとで考える。-->
+                <h2>ファイルを添付（Ctrlで複数選択可）</h2>
+                <input type='file' id='file' name='file[]' class='form_controll' multiple>
             </div>
             <div class='group'>
                 <select name="post[group_id]">

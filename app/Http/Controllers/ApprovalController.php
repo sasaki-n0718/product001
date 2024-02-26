@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Group;
 use App\Models\User;
+use App\Models\Attachment;
 use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
@@ -27,7 +28,8 @@ class ApprovalController extends Controller
             ]);
     }
 
-    public function store(Request $request,Post $post,Group $group){
+    public function store(Request $request,Post $post,Group $group,Attachment $attachment){
+        //ポスト保存
         $input=$request['post'];
         $input['user_id']=Auth::user()->id;
         $group_id=$request['post']['group_id'];
@@ -36,6 +38,27 @@ class ApprovalController extends Controller
         foreach($members as $member_id){
             $post->accepts()->attach($member_id);
         }
+        unset($member_id);
+        //ファイル保存
+        $files=$request->file('file');
+        $dir='attachment_files';
+        if(!empty($files)){
+            foreach($files as $file){
+                $file_name=$file->getClientOriginalName();
+                $file->storeAs('public/'.$dir,$file_name);
+                $post->attachments()->create([
+                    'name'=>$file_name,
+                    'path'=>'public/'.$dir.'/'.$file_name,
+                ]);
+                /*$input=[
+                    'post_id'=>$post->id,
+                    'name'=>$file_name,
+                    'path'=>'public/'.$dir.'/'.$file_name,
+                ];
+                $attachment->fill($input)->save();*/
+            }
+        }
+        //リダイレクト
         return redirect()->route('show',['id'=>$post->id]);
     }
     

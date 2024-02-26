@@ -40,6 +40,7 @@
     </div>
     <!--決裁詳細-->
     @if(isset($postbody))
+    <!--承認関係-->
     <div class='accept_count'>
         <p>承認状況{{$postbody->accepts()->wherePivot('accept',true)->count()}}/{{$postbody->accepts->count()}}</p>
     </div>
@@ -49,10 +50,16 @@
             <button>承認</button>
         </form>
     </div>
+    <!--本文-->
     <div class='approval_body'>
         <h2 class='title'>{{$postbody->title}}</h2>
         <h3 class='post_user'>{{$postbody->user->name}}({{$postbody->group->name}})</h3>
         <p class='body'>{{$postbody->body}}</p>
+        @if(isset($postbody->attachments))
+            @foreach($postbody->attachments as $file)
+                <a href="{{route('download',['id'=>$file->id])}}">{{$file->name}}</a>
+            @endforeach
+        @endif
     </div>
     @endif
 </body>
