@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,11 @@ route::middleware('auth')->group(function () {
     route::get('/',[ApprovalController::class,'index'])->name('index');
     route::get('/post',[ApprovalController::class,'post'])->name('post');
     route::get('/{id}',[ApprovalController::class,'index'])->whereNumber('id')->name('show');
-    route::post('{id}/accept',[ApprovalController::class,'accept'])->whereNumber('id')->name('accept');
+    route::post('/{id}/accept',[ApprovalController::class,'accept'])->whereNumber('id')->name('accept');
     route::post('/post',[ApprovalController::class,'store']);
+    route::get('/group',[GroupController::class,'create'])->name('group');
+    route::post('/group',[GroupController::class,'store']);
+    route::get('/download/{id}',[FileController::class,'download'])->name('download');
 });
-route::get('/group',[GroupController::class,'create'])->name('group');
-route::post('/group',[GroupController::class,'store']);
 
 require __DIR__.'/auth.php';
