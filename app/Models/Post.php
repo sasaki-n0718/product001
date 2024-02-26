@@ -22,6 +22,9 @@ class Post extends Model
     public function attachments(){
         return $this->hasMany(Attachment::class);
     }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
     
     public function searchIndex($keyword,$user,int $limit_count=5){
         $query=Post::query()->whereHas('accepts',function($q)use($user){

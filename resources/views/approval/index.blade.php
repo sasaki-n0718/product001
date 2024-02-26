@@ -61,6 +61,19 @@
             @endforeach
         @endif
     </div>
+    <!--コメント-->
+    <div class='comments'>
+        <h2 class='comment'>コメント</h2>
+        <form action="{{route('comment',['id'=>$postbody->id])}}" method="post">
+            @csrf
+            <input type="textarea" name="body">
+            <input type="submit" value="送信">
+        </form>
+        @foreach($postbody->comments as $comment)
+            <p>{{$comment->body}}</p>
+            <p class>{{$comment->user->name}}</p>
+        @endforeach
+    </div>
     @endif
 </body>
 
