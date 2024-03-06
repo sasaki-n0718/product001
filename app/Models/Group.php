@@ -17,7 +17,7 @@ class Group extends Model
     }
     
     public function group_member($group_id){
-        return $members=Group::find($group_id)->users()->get();
+        return $members=Group::find($group_id)->users()->get(['user_id',])->toArray();
     }
 
     protected $fillable=[

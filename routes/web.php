@@ -36,8 +36,10 @@ route::middleware('auth')->group(function () {
     route::post('/post',[ApprovalController::class,'store']);
     route::get('/group',[GroupController::class,'create'])->name('group');
     route::post('/group',[GroupController::class,'store']);
-    route::get('/download/{id}',[FileController::class,'download'])->name('download');
+    route::get('/{id}/download',[FileController::class,'download'])->name('download');
     route::post('/comment',[CommentController::class,'store'])->name('comment');
+    route::get('/{id}/edit',[ApprovalController::class,'edit'])->name('edit');
+    route::post('/{id}/edit',[ApprovalController::class,'update']);
 });
 
 require __DIR__.'/auth.php';

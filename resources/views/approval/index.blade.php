@@ -61,6 +61,10 @@
             @endforeach
         @endif
     </div>
+    <!--編集-->
+    <div class='edit'>
+        <a href="{{route('edit',['id'=>$postbody->id])}}">編集</a>
+    </div>
     <!--コメント-->
     <div class='comments'>
         <h2 class='comment'>コメント</h2>
