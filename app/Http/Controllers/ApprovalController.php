@@ -68,4 +68,24 @@ class ApprovalController extends Controller
         $user->accepts()->updateExistingPivot($post_id, ['accept' => true,]);
         return redirect()->route('show',['id'=>$post_id]);
     }
+    
+    public function edit(Request $request,Post $post){
+        return view('approval.edit')->with([
+            'postbody'=>$post->postbody($request->id),
+            'groups'=>Auth::user()->groups()->get(),
+            ]);
+    }
+    
+    public function update(Request $request,Post $post,Group $group){
+        $post=Post::find($request->id);
+        $input=$request['post'];
+        $group_id=$request['post']['group_id'];
+        $post->fill($input)->save();
+        $members=$group->group_member($group_id);
+        $post->accepts()->sync(array_keys($members));
+        /*foreach($members as $member_id){
+            $post->accepts()->sync($member_id);
+        }*/
+        return redirect()->route('show',['id'=>$request->id]);
+    }
 }
