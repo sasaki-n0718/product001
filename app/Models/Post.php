@@ -30,7 +30,6 @@ class Post extends Model
         $query=Post::query()->whereHas('accepts',function($q)use($user){
             $q->where('post_user.user_id',$user->id);
         });
-        /*dd($query);*/
         if(!empty($keyword)){
             $query->where('title','LIKE',"%{$keyword}%")->get();
         }

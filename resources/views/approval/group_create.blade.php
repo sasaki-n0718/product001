@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <body>
-    <div class='form'>
-        <form action="{{route('group')}} " method="POST">
+    <div class='create'>
+        <form action="{{route('group.create')}} " method="POST">
             @csrf
-            
-            <div class='group.name'>
+            <div class='group_name'>
                 <h2>グループ名</h2>
                 <input type="text" name="groupname">
             </div>
@@ -21,6 +20,9 @@
                 <input type="submit" value="作成">
             </div>
         </form>
+    </div>
+    <div class='cancel'>
+        <a href="{{route('index')}}">キャンセル</a>
     </div>
 </body>
 </html>

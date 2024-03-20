@@ -5,18 +5,31 @@
     <h1><a href=/>home page</a></h1>
     <!--検索機能-->
     <div class='search'>
-        <form action="{{route('index')}}" method="get">
+        <form action="{{route('index')}}" method='get'>
             @csrf
-            <input type="search" name="keyword" placeholder="検索キーワードを入力してください">
-            <input type="submit" value="検索">
+            <input type='search' name='keyword' placeholder='検索キーワードを入力してください'>
+            <input type='submit' value='検索'>
         </form>
     </div>
     <!--グループ追加（暫定）-->
-    <a href="{{route('group')}}">make group</a>
+    <div class='group_create'>
+        <a href="{{route('group.create')}}">グループを追加</a>
+    </div>
+    <div class='group_edit'>
+        <form action="{{route('group.edit'),}}" method='get'>
+            @csrf
+            <select name='group_id'>
+                @foreach($user->groups as $group)
+                <option value="{{$group->id}}">{{$group->name}}</option>
+                @endforeach
+            </select>
+            <input type='submit' value='グループを編集・削除'>
+        </form>
+    </div>
     <!--ログインユーザ表示-->
     <div class='user_name'>
         <p>ログイン中：{{$user->name}}</p>
-        <form action="{{route('logout')}}" method="post">
+        <form action="{{route('logout')}}" method='post'>
             @csrf
             <button>ログアウト</button>
         </form>
@@ -45,7 +58,7 @@
         <p>承認状況{{$postbody->accepts()->wherePivot('accept',true)->count()}}/{{$postbody->accepts->count()}}</p>
     </div>
     <div cllass='accept_button'>
-        <form action="{{route('accept',['id'=>$postbody->id])}}" method="post">
+        <form action="{{route('accept',['id'=>$postbody->id])}}" method='post'>
             @csrf
             <button>承認</button>
         </form>
@@ -68,10 +81,10 @@
     <!--コメント-->
     <div class='comments'>
         <h2 class='comment'>コメント</h2>
-        <form action="{{route('comment',['id'=>$postbody->id])}}" method="post">
+        <form action="{{route('comment',['id'=>$postbody->id])}}" method='post'>
             @csrf
-            <input type="textarea" name="body">
-            <input type="submit" value="送信">
+            <input type='textarea' name='body'>
+            <input type='submit' value='送信'>
         </form>
         @foreach($postbody->comments as $comment)
             <p>{{$comment->body}}</p>
