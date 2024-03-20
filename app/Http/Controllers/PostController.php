@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Attachment;
 use Illuminate\Support\Facades\Auth;
 
-class ApprovalController extends Controller
+class PostController extends Controller
 {
     public function index(Post $post,Request $request){
         $user=Auth::user();
@@ -83,9 +83,6 @@ class ApprovalController extends Controller
         $post->fill($input)->save();
         $members=$group->group_member($group_id);
         $post->accepts()->sync(array_keys($members));
-        /*foreach($members as $member_id){
-            $post->accepts()->sync($member_id);
-        }*/
         return redirect()->route('show',['id'=>$request->id]);
     }
 }
