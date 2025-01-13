@@ -13,30 +13,37 @@ class PostController extends Controller
 {
     public function index(Post $post,Request $request){
         $user=Auth::user();
-        $keyword=$request->input('keyword');
+        $search_title=$request->input('search_title');
+        $search_user=$request->input('search_user');
+        $accept_yn=(bool)$request->input('accept_yn');
         $id=$request->id;
         return view('approval.index')->with([
-            'posts'=>$post->searchIndex($keyword,$user),
+            'posts'=>$post->searchIndex($search_title,$search_user,$accept_yn,$user),
             'postbody'=>$post->postbody($id),
             'user'=>$user,
         ]);
     }
     
     public function post(){
+        $user=Auth::user();
         return view('approval.post')->with([
             'groups'=>Auth::user()->groups()->get(),
+            'user'=>$user,
             ]);
     }
 
     public function store(Request $request,Post $post,Group $group,Attachment $attachment){
         //ポスト保存
+        $request->validate([
+            'post.title'=>'required'
+            ]);
         $input=$request['post'];
         $input['user_id']=Auth::user()->id;
         $group_id=$request['post']['group_id'];
         $post->fill($input)->save();
         $members=$group->group_member($group_id);
         foreach($members as $member_id){
-            $post->accepts()->attach($member_id);
+            $post->accepts()->attach($member_id['user_id']);
         }
         unset($member_id);
         //ファイル保存
@@ -69,14 +76,26 @@ class PostController extends Controller
         return redirect()->route('show',['id'=>$post_id]);
     }
     
+    public function disaccept(Request $request){
+        $user=User::find(Auth::user()->id);
+        $post_id=$request->id;
+        $user->accepts()->updateExistingPivot($post_id, ['accept' => false,]);
+        return redirect()->route('show',['id'=>$post_id]);
+    }
+    
     public function edit(Request $request,Post $post){
+        $user=Auth::user();
         return view('approval.edit')->with([
             'postbody'=>$post->postbody($request->id),
             'groups'=>Auth::user()->groups()->get(),
+            'user'=>$user,
             ]);
     }
     
     public function update(Request $request,Post $post,Group $group){
+        $request->validate([
+            'post.title'=>'required'
+            ]);
         $post=Post::find($request->id);
         $input=$request['post'];
         $group_id=$request['post']['group_id'];
