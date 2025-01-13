@@ -31,17 +31,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $users=User::factory(10)->create();
+        $users=User::factory(5)->create();
         Group::factory(3)->hasAttached($users)->create();
         $group=Group::all();
-        Post::factory(30)->recycle($users)->recycle($group)->create();
-        User::factory()->create([
-            'name'=>'admin',
-            'email'=>'dddobrat@gmail.com',
-            ]);
+        Post::factory(15)->recycle($users)->recycle($group)->create();
         User::factory()->hasAttached($group)->create([
             'name'=>'test',
             'email'=>'test@example.com',
+            ]);
+        User::factory()->hasAttached($group)->create([
+            'name'=>'test2',
+            'email'=>'test2@example.com',
             ]);
     }
 }

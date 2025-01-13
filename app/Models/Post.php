@@ -26,19 +26,19 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
     
-    public function searchIndex($keyword,$user,int $limit_count=5){
-        $query=Post::query()->whereHas('accepts',function($q)use($user){
-            $q->where('post_user.user_id',$user->id);
+    public function searchIndex($search_title,$search_user,$accept_yn,$user,int $limit_count=5){
+        $query=Post::query()->whereHas('accepts',function($q)use($user,$accept_yn){
+            $q->where('post_user.user_id',$user->id)->where('post_user.accept',$accept_yn);
         });
-        if(!empty($keyword)){
-            $query->where('title','LIKE',"%{$keyword}%")->get();
+        if(!empty($search_title)){
+            $query->where('title','LIKE',"%{$search_title}%")->get();
         }
-        else{
-            $query->whereHas('accepts',function($q)use($user){
-                $q->where('post_user.user_id',$user->id)->where('post_user.accept',false);
+        if(!empty($search_user)){
+            $query->whereHas('user',function($q)use($search_user){
+                $q->where('name','LIKE',"%{$search_user}%");
             })->get();
         }
-        return $posts=$query->orderBy('updated_at','DESC')->paginate($limit_count);
+        return $posts=$query->orderBy('updated_at','DESC')->paginate($limit_count)->withQueryString();
     }
     
     public function postbody($id){

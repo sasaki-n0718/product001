@@ -163,9 +163,18 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'post.title' => [
+            'required' => 'タイトルを入力してください。',
         ],
+        'groupname'=>[
+            'required'=>'グループ名を入力してください。',
+        ],
+        'members'=>[
+            'required'=>'一人以上のメンバーを選択してください。',
+        ],
+        'body'=>[
+            'required'=>'コメントを入力してください。'
+        ]
     ],
 
     /*

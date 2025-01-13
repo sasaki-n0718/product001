@@ -22,6 +22,7 @@ use App\Http\Controllers\CommentController;
 /*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');*/
+URL::forceScheme('http');
 
 route::middleware('auth')->group(function () {
     //デフォルトで入ってるプロフページ
@@ -32,7 +33,8 @@ route::middleware('auth')->group(function () {
     route::get('/',[PostController::class,'index'])->name('index');
     route::get('/post',[PostController::class,'post'])->name('post');
     route::get('/{id}',[PostController::class,'index'])->whereNumber('id')->name('show');
-    route::post('/{id}/accept',[ApprovalController::class,'accept'])->whereNumber('id')->name('accept');
+    route::post('/{id}/accept',[PostController::class,'accept'])->whereNumber('id')->name('accept');
+    route::post('/{id}/disaccept',[PostController::class,'disaccept'])->whereNumber('id')->name('disaccept');
     route::post('/post',[PostController::class,'store']);
     route::get('/group/create',[GroupController::class,'create'])->name('group.create');
     route::post('/group/create',[GroupController::class,'store']);

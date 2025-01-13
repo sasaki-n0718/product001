@@ -16,7 +16,7 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
     public function accepts(){
-        return $this->belongsToMany(Post::class);
+        return $this->belongsToMany(Post::class)->withPivot('accept');
     }
     public function groups(){
         return $this->belongsToMany(Group::class);

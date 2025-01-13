@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function store(Request $request,Comment $comment){
+        $request->validate([
+            'body'=>'required',
+            ]);
         $user_id=Auth::user()->id;
         $post_id=$request->id;
         $body=$request->input('body');
